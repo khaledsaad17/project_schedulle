@@ -54,6 +54,9 @@ function addCourseFields() {
 }
 
 function storeData() {
+    
+    // document.getElementById('loading').style.display = 'block';
+    
     const form = document.getElementById('course-form');
     const formData = new FormData(form);
 
@@ -280,6 +283,8 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
 
 
 function displayData() {
+    
+    // document.getElementById('loading').style.display = 'none';
     const coursesBody = document.getElementById('courses-body');
     coursesBody.innerHTML = '';  // Clear the existing content
 
@@ -349,6 +354,9 @@ function getBooleanInput() {
 
 
 function make_process() {
+    
+    
+
     let value = getBooleanInput();
     
     alert("please wait few second untill make all process");
@@ -356,6 +364,14 @@ function make_process() {
     // console.log("this is the main function and this is the length of courses in coursedata => ",courseData.length)
     console.log('Processing started');
     let i = 0;
+    
+    //  for loading logo
+    // Show the loading logo
+    
+    document.getElementById('loading').style.display = 'block';
+    
+    // Simulate a long-running algorithm with a timeout
+
     algorithm(courseData[i], i, daylist_public, algo_public , value );
     // console.log('Current list_of_ai after make_process:', JSON.stringify(list_of_ai));
     // console.log('Course Data:', JSON.stringify(courseData));
@@ -715,6 +731,7 @@ function make_order_to_print_best_schedule(){
     // console.log(total_time_free_in_week);
     let i=total_time_free_in_week.length;
     let counter=10;
+    document.getElementById('loading').style.display = 'none';
     while (counter--) {
         let v = total_time_free_in_week[--i];
         // console.log(v);

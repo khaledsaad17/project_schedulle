@@ -4,8 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Scheduler</title>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
     <style>
+        
+        
+        .loading {
+            display: none;
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            border: 8px solid rgba(0, 0, 0, 0.1);
+            border-radius: 50%;
+            border-top: 8px solid white;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         body {
             position: relative;
             font-family: Arial, sans-serif;
@@ -84,7 +119,11 @@
 </head>
 <body>
 
-
+    
+    <div style="display: none;" id="loading" class="loading">
+        <div class="spinner"></div>
+        Processing, please wait...
+    </div>
 
     <div class="container">
         <h1>Course Scheduler</h1>
@@ -101,7 +140,7 @@
             </div>
     
             <div id="dynamic-fields"></div>
-    
+            
             <button type="button" onclick="addCourseFields()">Add Course Fields ( numer of section and lecture )</button>
             <button type="button" onclick="storeData()">Store Data</button>
             <button type="button" onclick="displayData()">Display Data</button>
@@ -133,7 +172,9 @@
         </div>
     </div>
     
-    <script src="/sandbox.js"></script>
+    <script src="/sandbox.js" >
+        
+    </script>
 
 
 </body>
