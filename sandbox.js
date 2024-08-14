@@ -57,7 +57,6 @@ function addCourseFields() {
 //  this function for storing the data in a list to use in the algorithm function.
 function storeData() {
     
-    // document.getElementById('loading').style.display = 'block';
     
     const form = document.getElementById('course-form');
     const formData = new FormData(form);
@@ -96,24 +95,21 @@ function storeData() {
     }
     courseData.push(courseDetails);
     alert("Data stored successfully!");
-    // console.log(formData.entries());
-    // console.log(courseData);
-    // console.log(courseDetails.details.length);
 }
 
 // this is shortcut for function ( coursedata , index , list that contain all days and time in that day , the schedull of the data collected )
 
 // this is the function that try and create all schedull possible from data entered.
 function algorithm(det, ind, daylist, algo , value_for_user_demond) {
-    // console.log('Processing course data');
+
     if (ind == courseData.length) {
-        // console.log('End of course data. Final algo:', JSON.stringify(algo));
+        
         console.log("schedulle in algorathm function !!!!!!!!!!!!!!!");
         let return_value=for_filter(algo,value_for_user_demond);
         if (return_value[0] <= filter0 && return_value[1] <= filter1) {
             filter1=return_value[1];
             filter0=return_value[0];
-            list_of_ai.push(JSON.parse(JSON.stringify(algo))); // Ensure deep copy of algo
+            list_of_ai.push(JSON.parse(JSON.stringify(algo))); 
         }
         return;
     }
@@ -127,7 +123,7 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
         let float_time_t = parseInt(h) + parseInt(m) / 60;
         let timevalue = [float_time_f, float_time_t];
         let lecture_time=timevalue;
-        // console.log(daylist);
+        
         if (!Object.keys(daylist).includes(lecture_value.day)) {
             daylist[x_lecture] = [];
             daylist[x_lecture].push(timevalue);
@@ -149,15 +145,6 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                         break;
 
 
-                            // this is old check
-                            // 1 → ( timevalue[1] >= daylist[x_lecture][i][0] && timevalue[1] <= daylist[x_lecture][i][1] )
-                            // 2 → (timevalue[0] >= daylist[x_lecture][i][0] && timevalue[0] < daylist[x_lecture][i][1] )
-
-
-                        // (newTime[0] < existing[1] && newTime[1] > existing[0]) || is done
-                        // (newTime[0] >= existing[0] && newTime[0] < existing[1]) ||  is done 
-                        // (newTime[1] > existing[0] && newTime[1] <= existing[1]) ||
-                        // (newTime[0] <= existing[0] && newTime[1] >= existing[1])   is done
                     }
                 }
                 if (!check) {
@@ -168,9 +155,6 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                 }
             }
         }
-        // this for check that section have value or not
-        // if (det.details.section.day) {
-            // console.log('ahmed saad abdelsatar');
             let section_counter=0;
             let len=det.details.section.length;
             det.details.section.forEach(section_value => {
@@ -184,7 +168,7 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                 let float_time_t = parseInt(h) + parseInt(m) / 60;
                 let timevalue = [float_time_f, float_time_t];
                 let section_time=timevalue;
-                // console.log(daylist);
+                
                 
                 if (!Object.keys(daylist).includes(section_value.day)) {
                     daylist[x_section] = [];
@@ -203,13 +187,12 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                 } else {
                     if (daylist[x_section].some(tv => tv[0] === timevalue[0] && tv[1] === timevalue[1]))
                     {
-                        // console.log('here he is check that the time is aready exist in feild section');
                         return;
                         
-                    } else {
+                    }else {
                         for (let i = 0; i < daylist[x_section].length; i++) {
                             if (timevalue[0] >= daylist[x_section][i][0] && timevalue[0] < daylist[x_section][i][1]) {
-                                // console.log('here he is check that the time is between any time ');
+                                
                                 check = false;
                                 break;
                             }
@@ -225,9 +208,9 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                             return;
                         } else {
                             daylist[x_section].push(timevalue);
-                            // console.log('aaaaaaaaaaaaaaaaaaaahhhhhhhhhhhh');
+                            
                             daylist[x_section].forEach(x_section=>{
-                                // console.log(x_section);
+                               
                             });
                             algo.push({
                                 courseCode: det.courseCode,
@@ -237,7 +220,7 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                             });
                             algorithm(courseData[ind + 1], ind + 1, daylist, algo,value_for_user_demond);
                             algo.pop();
-                            // console.log('here he will remove a one section time');
+                            
                             let l = daylist[x_section].filter(index=> index !== section_time );
                             daylist[x_section]=l;
                         }
@@ -253,32 +236,17 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
                 });
                 algorithm(courseData[ind + 1], ind + 1, daylist, algo,value_for_user_demond);
                 algo.pop();
-                // let l=daylist[x_lecture].filter(index=> index !== lecture_time );
-                // daylist[x_lecture]=l;
+                
             }
             
-            // فى مشكله هنا 
-            // console.log('this is a course counter = ',section_counter);
-            // console.log('this is a section length = ',det.details.section.length)
+            
             if (section_counter == det.details.section.length ) {
-                // console.log('her he will remove an one lecture time ');
+                
                 let l=daylist[x_lecture].filter(index=> index !== lecture_time );
                 daylist[x_lecture]=l;
                 
             }
-        // }else
-        // {
-        //     console.log('khaled saad abdelsatar');
-        //     algo.push({
-        //         courseCode: det.courseCode,
-        //         courseName: det.courseName,
-        //         roomNumber: det.roomNumber,
-        //         details: { lecture: [lecture_value], section: [] }
-        //     });
-        //     algorithm(courseData[ind + 1], ind + 1, daylist, algo);
-        // }
-        // let l=daylist[x_lecture].filter(index=> index !== lecture_time );
-        // daylist[x_lecture]=l;
+        
     });
 }
 
@@ -286,7 +254,6 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
 // this function for displaying the data you entered and stored in the list of courses.
 function displayData() {
     
-    // document.getElementById('loading').style.display = 'none';
     const coursesBody = document.getElementById('courses-body');
     coursesBody.innerHTML = '';  // Clear the existing content
 
