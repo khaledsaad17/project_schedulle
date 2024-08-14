@@ -10,9 +10,10 @@ let count_for_schedulle = 1;
 let filter0=999999999; // high value to ensure that first comparasion in became true
 let filter1=999999999;
 
+// this function for showing the lecture and section count .
 function addCourseFields() {
+
     const numberOfFields = prompt("Enter the number of sets of course details:");
-    // const numberOfFields2 = prompt("Enter the number of sets of course details:");
     const numFields = parseInt(numberOfFields, 10);
 
     if (!isNaN(numFields) && numFields > 0) {
@@ -53,6 +54,7 @@ function addCourseFields() {
     }
 }
 
+//  this function for storing the data in a list to use in the algorithm function.
 function storeData() {
     
     // document.getElementById('loading').style.display = 'block';
@@ -100,6 +102,8 @@ function storeData() {
 }
 
 // this is shortcut for function ( coursedata , index , list that contain all days and time in that day , the schedull of the data collected )
+
+// this is the function that try and create all schedull possible from data entered.
 function algorithm(det, ind, daylist, algo , value_for_user_demond) {
     // console.log('Processing course data');
     if (ind == courseData.length) {
@@ -279,9 +283,7 @@ function algorithm(det, ind, daylist, algo , value_for_user_demond) {
 }
 
 
-
-
-
+// this function for displaying the data you entered and stored in the list of courses.
 function displayData() {
     
     // document.getElementById('loading').style.display = 'none';
@@ -313,6 +315,7 @@ function displayData() {
         coursesBody.appendChild(row);
     });
 }
+// this is for delete a specific course
 function deleteCourse(index) {
     // Remove the course from the array
     courseData.splice(index, 1);
@@ -321,13 +324,10 @@ function deleteCourse(index) {
     displayData();
 }
 
-
-
-
+// this is function to display to user which way he prefers for his schedule  .
 function getBooleanInput() {
     const userInput = prompt("what is the perority in the result of schedule \n 1 → the time between lectures\n 2 → the total day free in the week \n 3 → both \nPlease chosse ( 1 , 2 , 3 ):");
     const data = parseInt(userInput, 10);
-    // console.log(data);
     if (data == 1) {
         return 1;
     } else if (data == 2) {
@@ -341,47 +341,22 @@ function getBooleanInput() {
 }
 
 
-
-
-
-
-
-
-
-
 // this is the main function for the algorithm
-
-
-
 function make_process() {
-    
-    
 
     let value = getBooleanInput();
-    
     alert("please wait few second untill make all process");
     data_for_test()
-    // console.log("this is the main function and this is the length of courses in coursedata => ",courseData.length)
     console.log('Processing started');
     let i = 0;
-    
-    //  for loading logo
-    // Show the loading logo
-    
     document.getElementById('loading').style.display = 'block';
-    
-    // Simulate a long-running algorithm with a timeout
-
     algorithm(courseData[i], i, daylist_public, algo_public , value );
-    // console.log('Current list_of_ai after make_process:', JSON.stringify(list_of_ai));
-    // console.log('Course Data:', JSON.stringify(courseData));
-    // Assuming these functions exist
     for_take_best_schedule();
     make_order_to_print_best_schedule();
     console.log("list_of_ai length is => ",list_of_ai.length);
 }
 
-
+// this function is used to display the finally schedule. 
 function displaySchedule(algo) {
     const scheduleTablesContainer = document.getElementById('schedule-tables');
     
@@ -464,6 +439,7 @@ function displaySchedule(algo) {
     count_for_schedulle++;
 }
 
+// for download the schedule .
 function downloadSchedule(table, count_for_schedulle) {
     // Create a new Blob from the table's HTML content
     const tableHtml = table.outerHTML;
@@ -476,157 +452,7 @@ function downloadSchedule(table, count_for_schedulle) {
     link.click();
 }
 
-
-
-// function displaySchedule(algo) {
-    
-//     const scheduleTablesContainer = document.getElementById('schedule-tables');
-    
-//     // Create a new table for the current schedule
-//     const table = document.createElement('table');
-//     table.border = 1;
-//     table.innerHTML = `
-//     <thead>
-//         <tr>
-//             <th colspan="7"  style="color: #cfcdd6;"><h3>Schedule ${count_for_schedulle}</h3></th>
-//         </tr>
-//         <tr>
-//             <th >Time</th>
-//             <th>Saturday</th>
-//             <th>Sunday</th>
-//             <th>Monday</th>
-//             <th>Tuesday</th>
-//             <th>Wednesday</th>
-//             <th>Thursday</th>
-//         </tr>
-//     </thead>
-//     <tbody id="schedule-body-${count_for_schedulle}">
-//         <!-- Rows will be added here dynamically -->
-//     </tbody>
-//     `;
-    
-//     const scheduleBody = table.querySelector(`#schedule-body-${count_for_schedulle}`);
-//     const timeSlots = {};
-    
-//     algo.forEach(course => {
-//         const allDetails = [...course.details.lecture, ...course.details.section]; // Combine lecture and section details
-    
-//         allDetails.forEach(detail => {
-//             const timeRange = `${detail.timeFrom} - ${detail.timeTo}`;
-    
-//             if (!timeSlots[timeRange]) {
-//                 timeSlots[timeRange] = {
-//                     Saturday: '',
-//                     Sunday: '',
-//                     Monday: '',
-//                     Tuesday: '',
-//                     Wednesday: '',
-//                     Thursday: ''
-//                 };
-//             }
-    
-//             timeSlots[timeRange][detail.day] += `
-//                 ${course.courseName} (${course.courseCode})<br>
-//                 ${detail.lectureOrSection} (${course.roomNumber})
-//             `;
-//         });
-//     });
-    
-//     Object.keys(timeSlots).forEach(time => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//             <td>${time}</td>
-//             <td>${timeSlots[time].Saturday || ''}</td>
-//             <td>${timeSlots[time].Sunday || ''}</td>
-//             <td>${timeSlots[time].Monday || ''}</td>
-//             <td>${timeSlots[time].Tuesday || ''}</td>
-//             <td>${timeSlots[time].Wednesday || ''}</td>
-//             <td>${timeSlots[time].Thursday || ''}</td>
-//         `;
-//         scheduleBody.appendChild(row);
-//     });
-    
-//     // Append the new table to the container
-//     scheduleTablesContainer.appendChild(table);
-    
-//     // Increment the count for the next schedule
-//     count_for_schedulle++;
-// }
-
-// function displaySchedule(algo) {
-//     const scheduleTablesContainer = document.getElementById('schedule-tables');
-    
-//     // Create a new table for the current schedule
-//     const table = document.createElement('table');
-//     table.border = 1;
-//     table.innerHTML = `
-//         <thead>
-//             <tr>
-//                 <th>Time</th>
-//                 <th>Saturday</th>
-//                 <th>Sunday</th>
-//                 <th>Monday</th>
-//                 <th>Tuesday</th>
-//                 <th>Wednesday</th>
-//                 <th>Thursday</th>
-//             </tr>
-//         </thead>
-//         <tbody id="schedule-body">
-//             <!-- Rows will be added here dynamically -->
-//         </tbody>
-        
-//     `;
-
-//     const scheduleBody = table.querySelector(`#schedule-body`);
-//     const timeSlots = {};
-
-//     algo.forEach(course => {
-//         const allDetails = [...course.details.lecture, ...course.details.section]; // Combine lecture and section details
-
-//         allDetails.forEach(detail => {
-//             const timeRange = `${detail.timeFrom} - ${detail.timeTo}`;
-
-//             if (!timeSlots[timeRange]) {
-//                 timeSlots[timeRange] = {
-//                     Saturday: '',
-//                     Sunday: '',
-//                     Monday: '',
-//                     Tuesday: '',
-//                     Wednesday: '',
-//                     Thursday: ''
-//                 };
-//             }
-
-//             timeSlots[timeRange][detail.day] += `
-//                 ${course.courseName} (${course.courseCode})<br>
-//                 ${detail.lectureOrSection} (${course.roomNumber})
-//                 <br>
-//                 <br>
-//                 <br>
-//             `;
-//         });
-//     });
-
-//     Object.keys(timeSlots).forEach(time => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//             <td>${time}</td>
-//             <td>${timeSlots[time].Saturday || ''}</td>
-//             <td>${timeSlots[time].Sunday || ''}</td>
-//             <td>${timeSlots[time].Monday || ''}</td>
-//             <td>${timeSlots[time].Tuesday || ''}</td>
-//             <td>${timeSlots[time].Wednesday || ''}</td>
-//             <td>${timeSlots[time].Thursday || ''}</td>
-        
-//             `;
-//         scheduleBody.appendChild(row);
-//     });
-
-//     // Append the new table to the container
-//     scheduleTablesContainer.appendChild(table);
-
-// }
-
+// this function is used to filter data and help function  < algorithms > to find the best schedule.
 function for_filter(the_schedule , value_for_user_demond ){
     let day_of_week={
         'Saturday':{'count_of_lecture':0 , 'time':[] },   
@@ -637,10 +463,9 @@ function for_filter(the_schedule , value_for_user_demond ){
         'Thursday':{'count_of_lecture':0 , 'time':[] }
     }
     the_schedule.forEach(course=>{
-        // console.log(course.details.lecture.length);
+        let d;
         if (course.details.lecture.length > 0) {
             d=course.details.lecture[0].day;
-            // console.log(d);
             day_of_week[d].count_of_lecture += 1;
             let time_F = course.details.lecture[0].timeFrom;
             let time_t = course.details.lecture[0].timeTo;
@@ -653,7 +478,6 @@ function for_filter(the_schedule , value_for_user_demond ){
         }
         if (course.details.section.length > 0) {
             d=course.details.section[0].day;
-            // console.log(d);
             day_of_week[d].count_of_lecture +=1;
             let time_F = course.details.section[0].timeFrom;
             let time_t = course.details.section[0].timeTo;
@@ -671,7 +495,6 @@ function for_filter(the_schedule , value_for_user_demond ){
     all_week_name.forEach(name=>{
         if (value_for_user_demond != 2) {
             day_of_week[name].time.sort((a,b)=> a[0]-b[0]);
-        // time_sum -=2;
             for (let index = 1; index < day_of_week[name].time.length; index++) {
             time_sum += day_of_week[name].time[index][1] - day_of_week[name].time[index-1][0];
         }
@@ -680,16 +503,13 @@ function for_filter(the_schedule , value_for_user_demond ){
             sum -= 1 ;
         }
     });
-    // console.log("\n\n\n\n\n",day_of_week,"\n\n\n\n");
     let for_return=[sum,time_sum];
     return for_return;
 
 }
 
 
-
-
-
+// this function for take best schedule/
 
 function for_take_best_schedule(){
     
@@ -703,19 +523,16 @@ function for_take_best_schedule(){
             'Thursday':0
         }
         schedule.forEach(course=>{
-            // console.log(course.details.lecture.length);
+            let d;
             if (course.details.lecture.length > 0) {
                 d=course.details.lecture[0].day;
-                // console.log(d);
                 day_of_week[d] += 1;
             }
             if (course.details.section.length > 0) {
                 d=course.details.section[0].day;
-                // console.log(d);
                 day_of_week[d] +=1;
             }
         })
-        // console.log(day_of_week);
         let sum=0;
         all_week_name.forEach(name=>{
             if (day_of_week[name] == 0 ) {
@@ -725,28 +542,22 @@ function for_take_best_schedule(){
         total_time_free_in_week.push([sum,index]);
     });
 }
-function make_order_to_print_best_schedule(){
 
+// make order to print best schedule
+function make_order_to_print_best_schedule()
+{
     total_time_free_in_week.sort();
-    // console.log(total_time_free_in_week);
     let i=total_time_free_in_week.length;
     let counter=10;
     document.getElementById('loading').style.display = 'none';
     while (counter--) {
         let v = total_time_free_in_week[--i];
-        // console.log(v);
         displaySchedule(list_of_ai[v[1]]);
         // counter
     }
 }
-// let day_of_week={
-//     'Saturday':0,   
-//     'Sunday':0,
-//     'Monday':0, 
-//     'Tuesday':0, 
-//     'Wednesday':0,
-//     'Thursday':0
-// }
+
+// this function for test the data.
 function data_for_test(){
     let data1 = {
         courseCode: 'cs281',
